@@ -17,6 +17,35 @@ document.querySelectorAll('.nav__mobile a').forEach(a => {
 });
 
 /* ============================================================
+   THEME TOGGLE
+   ============================================================ */
+const themeToggle = document.getElementById('theme-toggle');
+const themeStorageKey = 'portfolio-theme';
+
+function applyTheme(theme){
+  const nextTheme = theme === 'dark' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', nextTheme);
+  if (themeToggle){
+    themeToggle.setAttribute('aria-pressed', nextTheme === 'dark' ? 'true' : 'false');
+    themeToggle.setAttribute('aria-label', nextTheme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+    themeToggle.title = nextTheme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme';
+  }
+}
+
+const savedTheme = localStorage.getItem(themeStorageKey);
+const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+applyTheme(savedTheme || systemTheme);
+
+if (themeToggle){
+  themeToggle.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+    const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem(themeStorageKey, nextTheme);
+    applyTheme(nextTheme);
+  });
+}
+
+/* ============================================================
    SCROLL PROGRESS RAIL
    ============================================================ */
 const scrollFill = document.getElementById('scrollFill');
