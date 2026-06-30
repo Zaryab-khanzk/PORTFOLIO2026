@@ -1,0 +1,507 @@
+
+Claude finished the response
+
+Portfolio Website Build Prompt Build me a personal portfolio website using HTML, CSS, and JavaScript (no frameworks). Use Three.js for subtle 3D elements (e.g., an interactive 3D object on the hero section, or 3D scroll-based parallax) — keep it tasteful and performant, not gimmicky. Hard Design C
+
+pasted
+
+do it
+
+
+Architected design system with color palette and typography
+Architected design system with color palette and typography
+Now let me quickly verify it renders without errors using a headless check, then deliver.
+
+
+Ran 2 commands, read a file
+Ran 2 commands, read a file
+I went with a "blueprint / spec-sheet" direction — drafting-paper background, navy ink, one signal-orange accent, Space Grotesk + IBM Plex Sans/Mono, coordinate labels and section numbering as drafting marks, and a wireframe icosahedron "CAD viewport" in the hero (Three.js, rotates on a timer plus subtle pointer parallax, pauses off-screen, respects reduced-motion). It fits the dev/SEO/design hybrid angle: build → measure → render.
+
+All three files (index.html, style.css, script.js) are in the download above — open index.html directly in a browser, no build step needed. Swap the IMAGE PLACEHOLDER blocks in the About and Design sections for real photos/artwork whenever you're ready, and the contact form is front-end only (logs locally) until you wire it to something like Formspree.
+
+
+Index
+Code · HTML 
+
+Style
+Code · CSS 
+
+Script
+JS 
+
+Want to be notified when Claude responds?
+Claude Fable 5 is currently unavailable.
+Learn more(opens in new tab)
+
+
+
+
+Claude is AI and can make mistakes. Please double-check responses.
+
+
+Index · HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zaryab Khan — Web Developer · SEO Specialist · Designer</title>
+<meta name="description" content="Zaryab Khan — Web Developer, SEO Specialist & Graphic Designer based in Wah, Punjab, Pakistan.">
+ 
+<!-- ====================================================================
+     FONTS — Space Grotesk (display, technical/geometric) +
+     IBM Plex Sans (body, neutral & legible) + IBM Plex Mono (labels/data)
+     This is a deliberate pairing for a "blueprint / spec-sheet" aesthetic.
+     ==================================================================== -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+ 
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+ 
+<!-- ===== Grid / crosshair backdrop (decorative, fixed) ===== -->
+<div class="blueprint-grid" aria-hidden="true"></div>
+<div class="crosshair crosshair--tl" aria-hidden="true"></div>
+<div class="crosshair crosshair--br" aria-hidden="true"></div>
+ 
+<!-- ===== Progress rail ===== -->
+<div class="scroll-rail" aria-hidden="true"><div class="scroll-rail__fill" id="scrollFill"></div></div>
+ 
+<!-- ===== NAV ===== -->
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="#top" class="nav__mark">ZK<span class="nav__mark-sub">/01</span></a>
+    <nav class="nav__links">
+      <a href="#about"><span class="nav__num">00</span>About</a>
+      <a href="#skills"><span class="nav__num">01</span>Skills</a>
+      <a href="#experience"><span class="nav__num">02</span>Experience</a>
+      <a href="#projects"><span class="nav__num">03</span>Projects</a>
+      <a href="#design"><span class="nav__num">04</span>Design</a>
+      <a href="#contact"><span class="nav__num">05</span>Contact</a>
+    </nav>
+    <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav class="nav__mobile" id="navMobile">
+    <a href="#about">00 — About</a>
+    <a href="#skills">01 — Skills</a>
+    <a href="#experience">02 — Experience</a>
+    <a href="#projects">03 — Projects</a>
+    <a href="#design">04 — Design</a>
+    <a href="#education">05 — Education</a>
+    <a href="#hobbies">06 — Beyond Work</a>
+    <a href="#contact">07 — Contact</a>
+  </nav>
+</header>
+ 
+<main id="top">
+ 
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" id="hero">
+    <div class="hero__viewport">
+      <canvas id="heroCanvas"></canvas>
+      <div class="hero__viewport-label viewport-label--tl">FIG.01 — OBJ_NODE</div>
+      <div class="hero__viewport-label viewport-label--br"><span id="rotCoord">X 00.0° Y 00.0°</span></div>
+    </div>
+ 
+    <div class="hero__content">
+      <p class="eyebrow"><span class="eyebrow__dash"></span>PORTFOLIO — REV. 2026</p>
+      <h1 class="hero__title">
+        Zaryab<br>Khan
+      </h1>
+      <p class="hero__role">
+        <span>Web Developer</span><i>·</i><span>SEO Specialist</span><i>·</i><span>Graphic Designer</span>
+      </p>
+      <p class="hero__tagline">
+        I build the page, get it found, and make it look like it was worth finding —
+        code, search strategy, and visual design treated as one discipline, not three.
+      </p>
+      <div class="hero__cta">
+        <a href="#projects" class="btn btn--primary">View Work <span>↓</span></a>
+        <a href="#contact" class="btn btn--ghost">Get in Touch</a>
+      </div>
+    </div>
+ 
+    <div class="hero__meta">
+      <span>WAH · PUNJAB · PK</span>
+      <span class="hero__meta-divider"></span>
+      <span>BS CS — COMSATS · 23–27</span>
+    </div>
+  </section>
+ 
+  <!-- ===================== ABOUT ===================== -->
+  <section class="section" id="about">
+    <div class="section__head">
+      <span class="section__num">00</span>
+      <h2 class="section__title">About</h2>
+      <span class="section__rule"></span>
+    </div>
+ 
+    <div class="about__grid">
+      <div class="about__photo">
+        <!-- IMAGE PLACEHOLDER: replace background or swap in an <img> tag with your headshot -->
+        <div class="about__photo-frame">
+          <span class="about__photo-tag">IMG_PLACEHOLDER<br>800×1000</span>
+        </div>
+        <div class="about__photo-caption">FIG.02 — PORTRAIT, UNASSIGNED</div>
+      </div>
+ 
+      <div class="about__copy">
+        <p class="about__lede">
+          A Computer Science student who refused to stay in one lane —
+          so the work spans build, search, and surface.
+        </p>
+        <p>
+          Detail-oriented Computer Science student (6th semester, COMSATS University Islamabad —
+          Wah Campus) with hands-on experience in front-end web development using HTML, CSS,
+          JavaScript, and Bootstrap, plus working knowledge of SQL and MongoDB. Comfortable in
+          Git and GitHub, with a track record of shipping real projects solo and on freelance teams.
+        </p>
+        <p>
+          Alongside development, works as a results-driven SEO Specialist and Content Writer —
+          keyword research, on-page/off-page optimization, and performance analysis with SEMrush,
+          Ahrefs, and Google Analytics. Also designs, using Adobe Illustrator and Canva to round
+          out the loop from build → discoverability → visual polish.
+        </p>
+ 
+        <dl class="about__specs">
+          <div><dt>Based</dt><dd>Wah, Punjab, Pakistan</dd></div>
+          <div><dt>Studying</dt><dd>BS Computer Science, 2023–2027</dd></div>
+          <div><dt>Currently</dt><dd>Web Dev · SEO/Content · Design</dd></div>
+          <div><dt>Stack</dt><dd>HTML · CSS · JS · SQL · MongoDB</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- ===================== SKILLS ===================== -->
+  <section class="section section--inverted" id="skills">
+    <div class="section__head">
+      <span class="section__num">01</span>
+      <h2 class="section__title">Skills</h2>
+      <span class="section__rule"></span>
+    </div>
+ 
+    <div class="skills__grid">
+ 
+      <article class="skill-card">
+        <header class="skill-card__head">
+          <span class="skill-card__id">CAT.A</span>
+          <h3>Web Development</h3>
+        </header>
+        <ul class="skill-card__list">
+          <li>HTML</li><li>CSS</li><li>JavaScript</li><li>Bootstrap</li>
+          <li>SQL — MySQL Workbench</li><li>MongoDB</li><li>Git</li><li>GitHub</li>
+        </ul>
+      </article>
+ 
+      <article class="skill-card">
+        <header class="skill-card__head">
+          <span class="skill-card__id">CAT.B</span>
+          <h3>SEO &amp; Marketing</h3>
+        </header>
+        <ul class="skill-card__list">
+          <li>SEMrush</li><li>Ahrefs</li><li>Google Search Console</li>
+          <li>Google Analytics</li><li>Google Keyword Planner</li>
+        </ul>
+      </article>
+ 
+      <article class="skill-card">
+        <header class="skill-card__head">
+          <span class="skill-card__id">CAT.C</span>
+          <h3>Platforms / CMS</h3>
+        </header>
+        <ul class="skill-card__list">
+          <li>WordPress</li><li>Shopify</li><li>Wix Studio</li><li>CMS</li>
+        </ul>
+      </article>
+ 
+      <article class="skill-card">
+        <header class="skill-card__head">
+          <span class="skill-card__id">CAT.D</span>
+          <h3>Graphic Design</h3>
+        </header>
+        <ul class="skill-card__list">
+          <li>Adobe Illustrator</li><li>Canva</li>
+        </ul>
+      </article>
+ 
+      <article class="skill-card">
+        <header class="skill-card__head">
+          <span class="skill-card__id">CAT.E</span>
+          <h3>Content &amp; Strategy</h3>
+        </header>
+        <ul class="skill-card__list">
+          <li>Content Strategy</li><li>Blogging</li><li>Digital Marketing</li>
+          <li>AI-Assisted Content Creation</li>
+        </ul>
+      </article>
+ 
+    </div>
+  </section>
+ 
+  <!-- ===================== EXPERIENCE ===================== -->
+  <section class="section" id="experience">
+    <div class="section__head">
+      <span class="section__num">02</span>
+      <h2 class="section__title">Experience</h2>
+      <span class="section__rule"></span>
+    </div>
+ 
+    <div class="timeline">
+ 
+      <article class="timeline__item">
+        <div class="timeline__date"><span>JUN 2025</span><span>— NOV 2025</span></div>
+        <div class="timeline__node"></div>
+        <div class="timeline__body">
+          <h3>Web Development Intern</h3>
+          <p class="timeline__org">RevnoSoft</p>
+          <ul>
+            <li>Gained hands-on experience in HTML, CSS, and JavaScript for front-end development.</li>
+            <li>Performed web page updates, debugging, and improvements on live projects.</li>
+          </ul>
+        </div>
+      </article>
+ 
+      <article class="timeline__item">
+        <div class="timeline__date"><span>APR 2025</span><span>— JUN 2025</span></div>
+        <div class="timeline__node"></div>
+        <div class="timeline__body">
+          <h3>Content Writer, SEO Expert &amp; Web Developer</h3>
+          <p class="timeline__org">Pulsfi Marketing Agency</p>
+          <ul>
+            <li>Created SEO-optimized content, developed websites, and implemented SEO strategies for digital marketing projects.</li>
+            <li>Implemented on-page and off-page strategies to increase organic traffic across blogs and social media.</li>
+          </ul>
+        </div>
+      </article>
+ 
+      <article class="timeline__item">
+        <div class="timeline__date"><span>JAN 2023</span><span>— JUN 2025</span></div>
+        <div class="timeline__node"></div>
+        <div class="timeline__body">
+          <h3>Freelance Content Writer &amp; Web Developer</h3>
+          <p class="timeline__org">Fiverr</p>
+          <ul>
+            <li>Delivered high-quality SEO-optimized content and blog articles for international clients.</li>
+            <li>Built and optimized responsive websites using HTML, CSS, JavaScript, and WordPress.</li>
+            <li>Managed end-to-end client projects, from requirement gathering to final delivery and revisions.</li>
+          </ul>
+        </div>
+      </article>
+ 
+    </div>
+  </section>
+ 
+  <!-- ===================== PROJECTS ===================== -->
+  <section class="section section--inverted" id="projects">
+    <div class="section__head">
+      <span class="section__num">03</span>
+      <h2 class="section__title">Projects</h2>
+      <span class="section__rule"></span>
+    </div>
+ 
+    <div class="projects__grid">
+ 
+      <article class="project-card">
+        <div class="project-card__top">
+          <span class="project-card__cat">Database Systems</span>
+          <span class="project-card__id">P.01</span>
+        </div>
+        <h3>Library Management System</h3>
+        <p>Full-stack web app built with Node.js, Express, and MongoDB; includes REST APIs and an ER-modeled database design.</p>
+        <div class="project-card__tags">
+          <span>Node.js</span><span>Express</span><span>MongoDB</span><span>REST API</span>
+        </div>
+      </article>
+ 
+      <article class="project-card">
+        <div class="project-card__top">
+          <span class="project-card__cat">Artificial Intelligence</span>
+          <span class="project-card__id">P.02</span>
+        </div>
+        <h3>Chess Engine</h3>
+        <p>AI chess engine using Minimax with alpha-beta pruning and a custom heuristic evaluation function.</p>
+        <div class="project-card__tags">
+          <span>Minimax</span><span>Alpha-Beta Pruning</span><span>Heuristics</span>
+        </div>
+      </article>
+ 
+      <article class="project-card">
+        <div class="project-card__top">
+          <span class="project-card__cat">Programming Fundamentals</span>
+          <span class="project-card__id">P.03</span>
+        </div>
+        <h3>Data Encryption Standard</h3>
+        <p>Implemented DES encryption/decryption from scratch, covering key scheduling and Feistel rounds.</p>
+        <div class="project-card__tags">
+          <span>DES</span><span>Feistel Rounds</span><span>Key Scheduling</span>
+        </div>
+      </article>
+ 
+      <article class="project-card">
+        <div class="project-card__top">
+          <span class="project-card__cat">Machine Learning</span>
+          <span class="project-card__id">P.04</span>
+        </div>
+        <h3>Plant Disease Detection</h3>
+        <p>ML-based leaf disease classifier comparing SVM, Random Forest, and KNN against EfficientNet-B0 transfer learning.</p>
+        <div class="project-card__tags">
+          <span>SVM</span><span>Random Forest</span><span>KNN</span><span>EfficientNet-B0</span>
+        </div>
+      </article>
+ 
+    </div>
+  </section>
+ 
+  <!-- ===================== GRAPHIC DESIGN ===================== -->
+  <section class="section" id="design">
+    <div class="section__head">
+      <span class="section__num">04</span>
+      <h2 class="section__title">Design Work</h2>
+      <span class="section__rule"></span>
+    </div>
+    <p class="section__intro">A small selection of visual work — illustration and brand pieces made in Illustrator and Canva. Placeholders below; swap in real artwork anytime.</p>
+ 
+    <div class="design__grid">
+      <!-- IMAGE PLACEHOLDERS: replace each .design__tile background or insert <img> tags -->
+      <div class="design__tile"><span>ILLUSTRATOR<br>01</span></div>
+      <div class="design__tile"><span>CANVA<br>02</span></div>
+      <div class="design__tile"><span>ILLUSTRATOR<br>03</span></div>
+      <div class="design__tile"><span>CANVA<br>04</span></div>
+      <div class="design__tile"><span>ILLUSTRATOR<br>05</span></div>
+      <div class="design__tile"><span>CANVA<br>06</span></div>
+    </div>
+  </section>
+ 
+  <!-- ===================== EDUCATION ===================== -->
+  <section class="section section--inverted" id="education">
+    <div class="section__head">
+      <span class="section__num">05</span>
+      <h2 class="section__title">Education</h2>
+      <span class="section__rule"></span>
+    </div>
+ 
+    <div class="edu__list">
+      <article class="edu__item">
+        <div class="edu__year">2023 — 2027</div>
+        <div class="edu__body">
+          <h3>Bachelor of Science in Computer Science</h3>
+          <p>COMSATS University Islamabad, Wah Campus</p>
+        </div>
+      </article>
+      <article class="edu__item">
+        <div class="edu__year">2021 — 2023</div>
+        <div class="edu__body">
+          <h3>Intermediate</h3>
+          <p>The Scholars Science College</p>
+        </div>
+      </article>
+    </div>
+  </section>
+ 
+  <!-- ===================== HOBBIES ===================== -->
+  <section class="section" id="hobbies">
+    <div class="section__head">
+      <span class="section__num">06</span>
+      <h2 class="section__title">Beyond Work</h2>
+      <span class="section__rule"></span>
+    </div>
+ 
+    <div class="hobbies__strip">
+      <div class="hobby">
+        <span class="hobby__glyph" aria-hidden="true">♞</span>
+        <h3>Chess</h3>
+        <p>Same instinct that built the engine in P.02 — pattern, tempo, consequence.</p>
+      </div>
+      <div class="hobby">
+        <span class="hobby__glyph" aria-hidden="true">✎</span>
+        <h3>Sketching &amp; Digital Art</h3>
+        <p>Hand studies that feed straight back into the Illustrator work above.</p>
+      </div>
+      <div class="hobby">
+        <span class="hobby__glyph" aria-hidden="true">⌁</span>
+        <h3>Exploring New Tools</h3>
+        <p>New frameworks, new SEO tooling, new AI-assisted workflows — testing them early.</p>
+      </div>
+      <div class="hobby">
+        <span class="hobby__glyph" aria-hidden="true">↗</span>
+        <h3>SEO &amp; Marketing Trends</h3>
+        <p>Reading the algorithm shifts before they hit the case studies.</p>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- ===================== CONTACT ===================== -->
+  <section class="section section--contact" id="contact">
+    <div class="section__head">
+      <span class="section__num">07</span>
+      <h2 class="section__title">Contact</h2>
+      <span class="section__rule"></span>
+    </div>
+ 
+    <div class="contact__grid">
+      <div class="contact__info">
+        <p class="contact__lede">Open to web development, SEO/content, and design work — reach out directly or use the form.</p>
+ 
+        <ul class="contact__list">
+          <li>
+            <span class="contact__label">Email</span>
+            <a href="mailto:zaryabkhan3047@gmail.com">zaryabkhan3047@gmail.com</a>
+          </li>
+          <li>
+            <span class="contact__label">Phone</span>
+            <a href="tel:+923141812653">+92 314 1812653</a>
+          </li>
+          <li>
+            <span class="contact__label">Location</span>
+            <span>Wah, Punjab, Pakistan</span>
+          </li>
+          <li>
+            <span class="contact__label">GitHub</span>
+            <a href="https://github.com/zaryabkhan7403" target="_blank" rel="noopener">github.com/zaryabkhan7403</a>
+          </li>
+          <li>
+            <span class="contact__label">LinkedIn</span>
+            <a href="https://linkedin.com/in/zaryabkhan7403" target="_blank" rel="noopener">linkedin.com/in/zaryabkhan7403</a>
+          </li>
+        </ul>
+      </div>
+ 
+      <!-- Front-end only contact form — no backend wired up. Hook to your own endpoint later. -->
+      <form class="contact__form" id="contactForm" novalidate>
+        <div class="field">
+          <label for="cf-name">Name</label>
+          <input type="text" id="cf-name" name="name" required>
+        </div>
+        <div class="field">
+          <label for="cf-email">Email</label>
+          <input type="email" id="cf-email" name="email" required>
+        </div>
+        <div class="field">
+          <label for="cf-message">Message</label>
+          <textarea id="cf-message" name="message" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn btn--primary btn--full">Send Message <span>↗</span></button>
+        <p class="contact__status" id="contactStatus" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+ 
+  <footer class="footer">
+    <span>© 2026 Zaryab Khan</span>
+    <span class="footer__rule"></span>
+    <span>Built with HTML, CSS, JS &amp; Three.js</span>
+  </footer>
+ 
+</main>
+ 
+<!-- Three.js via CDN (r128, matches CapsuleGeometry-safe / OrbitControls-free usage) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
+ 
