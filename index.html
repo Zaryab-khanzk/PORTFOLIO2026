@@ -478,8 +478,15 @@
  
 </main>
  
-<!-- Three.js via CDN (r128, matches CapsuleGeometry-safe / OrbitControls-free usage) -->
+<!-- Three.js via CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<!-- EmailJS SDK - MUST be before script.js -->
+<script type="text/javascript" 
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+
+<!-- Your main script - ONLY ONE TIME -->
 <script src="script.js"></script>
 </body>
 </html>
