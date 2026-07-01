@@ -99,8 +99,36 @@ const contactForm = document.getElementById('contactForm');
 const contactStatus = document.getElementById('contactStatus');
 
 if (contactForm) {
+  const emailInput = contactForm.querySelector('input[type="email"]');
+
+  function isValidEmail(value) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+  }
+
+  if (emailInput) {
+    emailInput.addEventListener('input', () => {
+      emailInput.setCustomValidity('');
+      if (contactStatus.textContent.includes('valid email address')) {
+        contactStatus.textContent = '';
+        contactStatus.style.color = '';
+      }
+    });
+  }
+
     contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+
+    if (emailInput && !isValidEmail(emailInput.value)) {
+      emailInput.setCustomValidity('Please enter a valid email address.');
+      emailInput.reportValidity();
+      contactStatus.textContent = 'Please enter a valid email address before sending.';
+      contactStatus.style.color = '#f87171';
+      return;
+    }
+
+    if (emailInput) {
+      emailInput.setCustomValidity('');
+    }
 
         const submitBtn = contactForm.querySelector('button[type="submit"]');
         const originalBtnText = submitBtn.innerHTML;
