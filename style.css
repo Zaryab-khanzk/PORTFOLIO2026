@@ -114,7 +114,7 @@ button{ font-family:inherit; cursor:pointer; }
 .nav__links a:hover{ color:var(--ink); }
 
 .nav__theme-toggle{
-  margin-left:18px;
+  /* margin-left:18px; */
   padding:10px 12px;
   border:1px solid var(--ink-soft);
   background:transparent;
